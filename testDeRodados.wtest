@@ -5,6 +5,12 @@ describe "test de rodados" {
     const deportes = new Dependencia(empleados=45)
     const cultura = new Dependencia(empleados=31)
     const cachito = new Corsa(color="rojo")
+    const pedido960km = new Pedido(
+        distancia=960,
+        tiempoMaximo=8,
+        cantidadDePasajeros=4,
+        coloresIncompatibles=#{"azul", "negro"}
+    )
 
     method initialize() {
         deportes.agregarAFlota(cachito)
@@ -30,5 +36,16 @@ describe "test de rodados" {
     }
     test "cultura: no está bien equipada porque tiene trafic con motor bataton" {
         assert.notThat(cultura.estaBienEquipado())
+    }
+    test "cachito puede cumplir con el pedido960km" {
+        assert.that(pedido960km.puedeSatisfacerlo(cachito))
+    }
+    test "si al pedido le agregamos el color rojo como incompatible, cachito no satisface" {
+        pedido960km.agregarColorIncompatible("rojo")
+        assert.notThat(pedido960km.puedeSatisfacerlo(cachito))
+    }
+    test "si al pedido le configuramos 6 pasajeros, entonces cachito no puede satisfacer el pedido" {
+        pedido960km.cantidadDePasajeros(6)
+        assert.notThat(pedido960km.puedeSatisfacerlo(cachito))
     }
 }

@@ -94,3 +94,28 @@ class Dependencia {
         return empleados >= 40 && flota.size() >= 5
     }
 }
+
+class Pedido {
+    const distancia
+    var property tiempoMaximo
+    var property cantidadDePasajeros
+    const coloresIncompatibles = #{}
+
+    method agregarColorIncompatible(unColor) {
+        coloresIncompatibles.add(unColor)
+    }
+    method velocidadRequerida() {
+        return distancia.div(tiempoMaximo)
+    }
+    method puedeSatisfacerlo(unAuto) {
+        return unAuto.velocidad() >= self.velocidadRequerida()+10
+        && unAuto.capacidad() >= cantidadDePasajeros
+        && not coloresIncompatibles.contains(unAuto.color())
+    }
+    method acelarar() {
+        tiempoMaximo = (tiempoMaximo - 1).max(0)
+    }
+    method relajar() {
+        tiempoMaximo = tiempoMaximo + 1
+    }
+}
