@@ -52,6 +52,45 @@ object bataton {
     method velocidad() = 80 
 }
 
-class AutosEspeciales {
-    
+class AutoEspecial {
+    const property color
+    const property capacidad
+    const property velocidad
+    const property peso
+}
+
+class Dependencia {
+    const flota = []
+    const empleados
+
+    method agregarAFlota(rodado) {
+        flota.add(rodado)
+    }
+    method quitarDeFlota(rodado) {
+        flota.remove(rodado)
+    }
+    method pesoTotalFlota() {
+        return flota.sum({ r => r.peso() })
+    }
+    method estaBienEquipado() {
+        return flota.size() >= 3 && flota.all({ r => r.velocidad() >= 100 })
+    }
+    method capacidadTotalEnColor(color) {
+        return self.rodadosDelColor(color).sum({ r => r.capacidad() })
+    }
+    method rodadosDelColor(color) {
+        return flota.filter({ r => r.color() == color })
+    }
+    method colorDelRodadoMasRapido() {
+        return self.rodadoMasRapido().color()
+    }
+    method rodadoMasRapido() {
+        return flota.max({ r => r.velocidad() })
+    }
+    method capacidadFaltante() {
+        return empleados - flota.sum({ r => r.capacidad() })
+    }
+    method esGrande() {
+        return empleados >= 40 && flota.size() >= 5
+    }
 }
