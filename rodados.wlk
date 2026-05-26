@@ -61,7 +61,21 @@ class AutoEspecial {
 
 class Dependencia {
     const flota = []
+    const pedidos = []
     const empleados
+
+    method agregarPedido(unPedido) {
+        pedidos.add(unPedido)
+    }
+    method totalPasajerosEnPedidos() {
+        return pedidos.sum({ p => p.cantidadDePasajeros() })
+    }
+    method pedidosQueNoPuedenSerSatisfechos() {
+        return pedidos.filter({ p => !self.unPedidoPuedeSerSatisfechoPor(p) })
+    }
+    method unPedidoPuedeSerSatisfechoPor(unPedido) {
+        return flota.any({ a => unPedido.puedeSatisfacerlo(a) })
+    }
 
     method agregarAFlota(rodado) {
         flota.add(rodado)
@@ -110,7 +124,7 @@ class Pedido {
     method puedeSatisfacerlo(unAuto) {
         return unAuto.velocidad() >= self.velocidadRequerida()+10
         && unAuto.capacidad() >= cantidadDePasajeros
-        && not coloresIncompatibles.contains(unAuto.color())
+        && !coloresIncompatibles.contains(unAuto.color())
     }
     method acelarar() {
         tiempoMaximo = (tiempoMaximo - 1).max(0)
