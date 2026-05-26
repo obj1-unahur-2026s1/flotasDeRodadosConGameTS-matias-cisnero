@@ -30,7 +30,7 @@ object trafic {
 
     method color() = "blanco"
     method capacidad() = interior.capacidad()
-    method velocidad() = motor.capacidad()
+    method velocidad() = motor.velocidad()
     method peso() = 4000 + interior.peso() + motor.peso()
 }
 
